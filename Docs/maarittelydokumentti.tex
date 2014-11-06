@@ -21,30 +21,31 @@
 \section*{Tietorakennevertailut}
 
 Työssä on tarkoitus vertailla neljää eri tietorakennetta: AVL-puuta, punamusta
-puuta, B-puuta ja kekoa. Tarkoitus olisi tutkia ja vertailla, missä tilanteessa
-kukin tietorakenne olisi sopivin. Kullakin hakupuulla on erilaiset toteutus 
+puuta, B-puuta ja binäärihakupuuta. Tarkoitus olisi tutkia ja vertailla, missä 
+tilanteessa kukin tietorakenne olisi sopivin. Kullakin hakupuulla on erilaiset toteutus
 tavat ja siten voinee olettaa, että toinen puu voi toimia toista paremmin
-samassa tilanteessa. Tietorakenteet ovat valittu satunnaisesti. Olen kuullut 
-joskus kyseisistä rakenteista joissain yhteyksissä ja nyt googlaamalla selvittänyt 
+samassa tilanteessa. Tietorakenteet ovat valittu satunnaisesti. Olen kuullut
+joskus kyseisistä rakenteista joissain yhteyksissä ja nyt googlaamalla selvittänyt
 minkälaisia ne suurinpiirtein ovat.
 
 Kaikilla tietorakenteille on ilmoitettu $O$-analyysin tulokset. AVL-puulla haulle,
-lisäykselle ja poistolle se on $O(\log n)$ keskimääräisessä ja pahimmassa 
-tapauksessa. Punamusta puulle haku, lisäys ja poisto voidaan tehdä samassa 
-ajassa $O(\log n)$, kuten B-puulle ja keolle. Vaikka tulokset ovat samat, niin
-hakupuilla on erilaiset toteutustavat. Tilanteesta riippuen kannattanee miettiä
-mitä rakennetta käyttää, toinen voi toimia toista nopeammin vaikka $O$-analyysin
-tulokset ovatkin samat.
+lisäykselle ja poistolle se on $O(\log n)$ keskimääräisessä ja pahimmassa
+tapauksessa. Punamusta puulle haku, lisäys ja poisto voidaan tehdä samassa
+ajassa $O(\log n)$, kuten B-puulle. Binäärihakupuulla pahin tapaus voi olla
+$O(n)$. Vaikka tulokset ovat samat kolmelle ensimmäiselle, ja hyvässä tapauksessa
+neljännelle, niin hakupuilla on erilaiset toteutustavat. Tilanteesta riippuen 
+kannattanee miettiä mitä rakennetta käyttää, toinen voi toimia toista nopeammin 
+vaikka $O$-analyysin tulokset ovatkin samat.
 
 Tietorakenteita tultanee testaamaan generoimalla satunnaisia kokonaislukuja ja
-lisäämällä niitä tietorakenteisiin, sekä hakemalla ja poistamalla satunnaisia 
+lisäämällä niitä tietorakenteisiin, sekä hakemalla ja poistamalla satunnaisia
 lukuja, jos luku löytyy tietorakenteesta. Lisäyksien, hakujen ja poistojen vertailua
 suoritetaan myös toteutusta koodatessa ja toteutuksesta voi myös arvioida,
 minkälaisiin tilanteisiin tietorakenne sopisi.
 
 \nocite{AVL}
 \nocite{PM}
-\nocite{Keko}
+\nocite{Bin}
 \nocite{B-puu}
 \renewcommand{\refname}{Lähteet}
 \bibliography{tira}
