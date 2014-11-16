@@ -10,6 +10,8 @@ public class BinaariHakupuu {
     
     private Solmu juuri;
     
+    private String tulostus;
+    
     /**
      * Muodostetaan ensin tyhjä hakupuu. Tämän jälkeen puuhun voi lisätä solmuja.
      * Ensimmäinen solmu on juuri.
@@ -50,22 +52,27 @@ public class BinaariHakupuu {
      * @param solmu puun T alkiot voidaan tulostaa kutsumalla rekursiivista 
      * algoritmia parametrilla T.juuri
      */
-    public void tulosta(Solmu solmu) {
+    public String tulosta(Solmu solmu) {
         
         if(solmu != null) {
             tulosta(solmu.vasen());
-            System.out.println(solmu.tieto());
+            //System.out.println(solmu.tieto());
+            tulostus = tulostus+solmu.tieto()+" ";
             tulosta(solmu.oikea());
         }
+        return tulostus;
     }
     
     /**
-     * Poistetaan arvoa vastaava solmu
+     * Poistetaan arvoa vastaava solmu muuttamalla sen arvoa. Jos poistettava
+     * solmu on lehti se saa arvon null. Jos poistettavalla on yksi joko vasemman tai
+     * oikean puoleinen lapsi, lapsen arvo asetetaan poistettavan solmun arvoksi ja
+     * lapsi poistetaan. Jos poistettavalla solmulla on kaksi lasta.....
      * @param arvo poistettava arvo
      */
     public Solmu poista(int arvo) {
         
-        Solmu pois = etsi(juuri, arvo), vanhempi=pois.vanhempi();
+        Solmu pois = etsi(juuri, arvo), vanhempi=pois.vanhempi(), lapsi;
         if(pois.vasen() == null && pois.oikea() == null) {
             if(vanhempi.oikea().equals(pois))
                 vanhempi.asetaOikea(null);
@@ -74,16 +81,17 @@ public class BinaariHakupuu {
             return pois;
         }
         if(pois.vasen() == null || pois.oikea() == null) {
-            if(pois.tieto() < vanhempi.tieto())
-                if(pois.vasen() == null)
-                    vanhempi.asetaVasen(pois.oikea());
-                else
-                    vanhempi.asetaVasen(pois.vasen());
+            if(pois.vasen() != null)
+                vanhempi.asetaVasen(pois.vasen());
             else
-                vanhempi.asetaOikea(pois);
+                vanhempi.asetaOikea(pois.oikea());
             return pois;
         }
-        
+        Solmu seuraaja = etsiMin(pois);
+        pois.muutaTietoa(seuraaja.tieto());
+        if(seuraaja.oikea() != null)
+            seuraaja = seuraaja.oikea();
+        return pois;
     }
     
     /**
@@ -149,7 +157,6 @@ public class BinaariHakupuu {
         Solmu suurin = etsiMax(juuri);
         if(suurin == null)
             return 0;
-        
         return suurin.tieto();
     }
     
@@ -167,4 +174,11 @@ public class BinaariHakupuu {
         return juuri;
     }
     
+    @Override
+    public String toString() {
+        
+        tulostus = "";
+        //System.out.println(tulosta(juuri));
+        return tulosta(juuri).trim();
+    }
 }

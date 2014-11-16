@@ -25,6 +25,11 @@ public class Solmu {
     private Solmu oikea;
     
     /**
+     * korkeus
+     */
+    private int korkeus;
+    
+    /**
      * Viite vanhempaan
      */
     private Solmu vanhempi;
@@ -74,6 +79,15 @@ public class Solmu {
     }
     
     /**
+     * 
+     * @return palauttaa solmun korkeuden
+     */
+    public int korkeus() {
+        
+        return this.korkeus;
+    }
+    
+    /**
      * Muuttaa tieto-kentän arvoa.
      * @param uusiLuku tieto-kentän uusi arvo
      */
@@ -100,8 +114,21 @@ public class Solmu {
         this.oikea = oikea;
     }
     
+    /**
+     * Asettaa solmulla vanhemman
+     * @param vanhempi viite solmun vanhempaan 
+     */
     public void asetaVanhempi(Solmu vanhempi) {
         
         this.vanhempi = vanhempi;
+    }
+    
+    /**
+     * Asettaa korkeuden AVL puun solmulle
+     * @param korkeus int.
+     */
+    public void asetaKorkeus(int korkeus) {
+        
+        this.korkeus = korkeus;
     }
 }
