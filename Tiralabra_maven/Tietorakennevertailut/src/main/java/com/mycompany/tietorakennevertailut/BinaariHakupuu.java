@@ -60,38 +60,66 @@ public class BinaariHakupuu {
             tulostus = tulostus+solmu.tieto()+" ";
             tulosta(solmu.oikea());
         }
-        return tulostus;
+        return tulostus.trim();
     }
     
     /**
-     * Poistetaan arvoa vastaava solmu muuttamalla sen arvoa. Jos poistettava
+     *Poistetaan arvoa vastaava solmu muuttamalla sen arvoa. Jos poistettava
      * solmu on lehti se saa arvon null. Jos poistettavalla on yksi joko vasemman tai
      * oikean puoleinen lapsi, lapsen arvo asetetaan poistettavan solmun arvoksi ja
-     * lapsi poistetaan. Jos poistettavalla solmulla on kaksi lasta.....
+     * lapsi poistetaan. Jos poistettavalla solmulla on kaksi lasta, niin solmun
+     * tiedoksi tulee oikean puoleisen alipuun pienin arvo. Tämä pienin arvo poistetaan
+     * ja tällä pienimmällä arvolla ei ole kuin korkeintaan oikea lapsi ja 
+     * poistaminen tapahtuu kuten aikaisemmin.
      * @param arvo poistettava arvo
+     * @return palauttaa viitteen poistettuun solmuun
      */
     public Solmu poista(int arvo) {
         
-        Solmu pois = etsi(juuri, arvo), vanhempi=pois.vanhempi(), lapsi;
-        if(pois.vasen() == null && pois.oikea() == null) {
-            if(vanhempi.oikea().equals(pois))
+        Solmu poista = etsi(juuri, arvo), vanhempi, lapsi;
+        if(poista == null)
+            return null;
+        else
+            vanhempi = poista.vanhempi();
+        if(poista.vasen() == null && poista.oikea() == null) {
+            if(vanhempi == null) {
+                juuri = null;
+                return poista;
+            }
+            if(vanhempi.oikea().equals(poista))
                 vanhempi.asetaOikea(null);
             else
                 vanhempi.asetaVasen(null);
-            return pois;
+            return poista;
         }
-        if(pois.vasen() == null || pois.oikea() == null) {
-            if(pois.vasen() != null)
-                vanhempi.asetaVasen(pois.vasen());
+        if(poista.vasen() == null || poista.oikea() == null) {
+            if(poista.vasen() != null)
+                lapsi = poista.vasen();
             else
-                vanhempi.asetaOikea(pois.oikea());
-            return pois;
+                lapsi = poista.oikea();
+            vanhempi = poista.vanhempi();
+            lapsi.asetaVanhempi(vanhempi);
+            if(vanhempi == null) {
+                juuri = lapsi;
+                return poista;
+            }
+            if(poista.equals(vanhempi.vasen()))
+                vanhempi.asetaVasen(lapsi);
+            else
+                vanhempi.asetaOikea(lapsi);
+            return poista;
         }
-        Solmu seuraaja = etsiMin(pois);
-        pois.muutaTietoa(seuraaja.tieto());
-        if(seuraaja.oikea() != null)
-            seuraaja = seuraaja.oikea();
-        return pois;
+        Solmu seuraaja = etsiMin(poista.oikea());
+        poista.muutaTietoa(seuraaja.tieto());
+        lapsi = seuraaja.oikea();
+        vanhempi = seuraaja.vanhempi();
+        if(vanhempi.vasen().equals(seuraaja))
+            vanhempi.asetaVasen(lapsi);
+        else
+            vanhempi.asetaOikea(lapsi);
+        if(lapsi != null)
+            lapsi.asetaVanhempi(vanhempi);
+        return poista;
     }
     
     /**
@@ -179,6 +207,6 @@ public class BinaariHakupuu {
         
         tulostus = "";
         //System.out.println(tulosta(juuri));
-        return tulosta(juuri).trim();
+        return tulosta(juuri);
     }
 }

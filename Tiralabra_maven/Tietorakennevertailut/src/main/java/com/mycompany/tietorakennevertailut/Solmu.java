@@ -30,6 +30,11 @@ public class Solmu {
     private int korkeus;
     
     /**
+     * väri, 'm' on musta ja 'p' on punainen
+     */
+    private char vari;
+    
+    /**
      * Viite vanhempaan
      */
     private Solmu vanhempi;
@@ -87,6 +92,11 @@ public class Solmu {
         return this.korkeus;
     }
     
+    public char vari() {
+        
+        return this.vari;
+    }
+    
     /**
      * Muuttaa tieto-kentän arvoa.
      * @param uusiLuku tieto-kentän uusi arvo
@@ -130,5 +140,25 @@ public class Solmu {
     public void asetaKorkeus(int korkeus) {
         
         this.korkeus = korkeus;
+    }
+    
+    /**
+     * Asettaa solmun värin punamustalle puulle.
+     * @param vari 
+     */
+    public void asetaVari(char vari) {
+        
+        if(vari == 'p')
+            this.vari = vari;
+        else if (vari == 'm')
+            this.vari = vari;
+        else ;
+    }
+    
+    @Override
+    public String toString() {
+        
+        String tulostus = ""+tieto;
+        return tulostus;
     }
 }
