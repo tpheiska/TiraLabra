@@ -55,10 +55,14 @@ public class AVLpuu {
     private Solmu kiertoOikealle(Solmu solmu) {
         
         Solmu solmu2 = solmu.vasen();
+        solmu2.asetaVanhempi(solmu.vanhempi());
+        solmu.asetaVanhempi(solmu2);
         solmu.asetaVasen(solmu2.oikea());
         solmu2.asetaOikea(solmu);
-        solmu.asetaKorkeus(maksimi(solmu.oikea().korkeus(), solmu.vasen().korkeus()) + 1);
-        solmu2.asetaKorkeus(maksimi(solmu2.vasen().korkeus(), solmu.korkeus()) + 1);
+        if(solmu.vasen() != null)
+            solmu.vasen().asetaVanhempi(solmu);
+        solmu.asetaKorkeus(maksimi(korkeus(solmu.oikea()), korkeus(solmu.vasen())) + 1);
+        solmu2.asetaKorkeus(maksimi(korkeus(solmu2.vasen()), korkeus(solmu2.oikea())) + 1);
         return solmu2;
     }
     
@@ -70,10 +74,14 @@ public class AVLpuu {
     private Solmu kiertoVasemmalle(Solmu solmu) {
         
         Solmu solmu2 = solmu.oikea();
+        solmu2.asetaVanhempi(solmu.vanhempi());
+        solmu.asetaVanhempi(solmu2);
         solmu.asetaOikea(solmu2.vasen());
         solmu2.asetaVasen(solmu);
-        solmu.asetaKorkeus(maksimi(solmu.oikea().korkeus(), solmu.vasen().korkeus()) + 1);
-        solmu2.asetaKorkeus(maksimi(solmu2.oikea().korkeus(), solmu.korkeus()) + 1);
+        if(solmu.oikea() != null)
+            solmu.oikea().asetaVanhempi(solmu);
+        solmu.asetaKorkeus(maksimi(korkeus(solmu.oikea()), korkeus(solmu.vasen())) + 1);
+        solmu2.asetaKorkeus(maksimi(korkeus(solmu2.oikea()), korkeus(solmu2.vasen())) + 1);
         return solmu2;
     }
     
@@ -99,60 +107,132 @@ public class AVLpuu {
         return kiertoOikealle(solmu);
     }
     
+
     /**
-     * Lisää luvun AVL puuhun
-     * @param arvo lisättävä luku
+     * Lisätään puuhun arvoa vastaava solmu ja tasapainotetaan puu
+     * @param arvo lisättävä arvo
      */
     public void lisaa(int arvo) {
         
-        juuri = lisaa(juuri, arvo);
+        if(etsi(arvo))
+            return;
+        Solmu uusi = lisaa(juuri, arvo), vanhempi, alipuu;
+        Solmu p = uusi.vanhempi();
+        while(p != null) {
+            if(korkeus(p.vasen()) - korkeus(p.oikea()) == 2) {
+                vanhempi = p.vanhempi();
+                if(korkeus(p.vasen().vasen()) > korkeus(p.vasen().oikea()))
+                    alipuu = kiertoOikealle(p);
+                else
+                    alipuu = kaksoiskiertoOikealle(p);
+                if(vanhempi == null)
+                    this.juuri = alipuu;
+                else if(vanhempi.vasen().equals(p))
+                    vanhempi.asetaVasen(alipuu);
+                else
+                    vanhempi.asetaOikea(alipuu);
+                if(vanhempi != null)
+                    vanhempi.asetaKorkeus(maksimi(korkeus(vanhempi.vasen()), korkeus(vanhempi.oikea())) +1);
+                return ;
+            }
+            if(korkeus(p.oikea()) - korkeus(p.vasen()) == 2) {
+                vanhempi = p.vanhempi();
+                if(korkeus(p.oikea().oikea()) > korkeus(p.oikea().vasen()))
+                    alipuu = kiertoVasemmalle(p);
+                else
+                    alipuu = kaksoiskiertoVasemmalle(p);
+                if(vanhempi == null)
+                    this.juuri = alipuu;
+                else if(vanhempi.vasen().equals(p))
+                    vanhempi.asetaVasen(alipuu);
+                else
+                    vanhempi.asetaOikea(alipuu);
+                if(vanhempi != null)
+                    vanhempi.asetaKorkeus(maksimi(korkeus(vanhempi.vasen()), korkeus(vanhempi.oikea())) + 1);
+                return ;
+            }
+            p.asetaKorkeus(maksimi(korkeus(p.vasen()), korkeus(p.oikea())) + 1);
+            p = p.vanhempi();
+        }
     }
     
+    /**
+     * Lisätään uusi solmu puuhun
+     * @param solmu puun juuri
+     * @param arvo lisättävä arvo
+     * @return viite lisättyyn solmuun
+     */
     private Solmu lisaa(Solmu solmu, int arvo) {
         
+        Solmu uusi = new Solmu(arvo);
         if(solmu == null) {
-            solmu = new Solmu(arvo);
-        } else if(arvo < solmu.tieto()) {
-            solmu.asetaVasen(lisaa(solmu.vasen(), arvo));
-            if(korkeus(solmu.vasen()) - korkeus(solmu.oikea()) == 2)
-                if(arvo < solmu.vasen().tieto())
-                    solmu = kiertoOikealle(solmu);
+            uusi.asetaKorkeus(0);
+            this.juuri = uusi;
+            return this.juuri;
+        } else {
+            Solmu vanhempi = juuri;
+            while(solmu != null) {
+                vanhempi = solmu;
+                if(uusi.tieto() < solmu.tieto())
+                    solmu = solmu.vasen();
                 else
-                    solmu = kaksoiskiertoOikealle(solmu);
-        } else if(arvo > solmu.tieto()) {
-            solmu.asetaOikea(lisaa(solmu.oikea(), arvo));
-            if(korkeus(solmu.oikea()) - korkeus(solmu.vasen()) == 2)
-                if(arvo > solmu.oikea().tieto())
-                    solmu = kiertoVasemmalle(solmu);
-                else
-                    solmu = kaksoiskiertoVasemmalle(solmu);
-        } else ;
-        solmu.asetaKorkeus(maksimi(korkeus(solmu.vasen()), korkeus(solmu.oikea()) + 1));
-        return solmu;
+                    solmu = solmu.oikea();
+            }
+            uusi.asetaVanhempi(vanhempi);
+            if(uusi.tieto() < vanhempi.tieto())
+                vanhempi.asetaVasen(uusi);
+            else
+                vanhempi.asetaOikea(uusi);
+        }
+        uusi.asetaKorkeus(0);
+        return uusi;
     }
     
+    /**
+     * Poistetaan arvoa vastaava solmu ja tasapainotetaan puu
+     * @param arvo poistettava arvo
+     */
     public void poista(int arvo) {
         
-        Solmu vanhempi, poista = poista(juuri, arvo);
+        Solmu vanhempi, poista = poista(juuri, arvo), alipuu;
+        if(poista == null)
+            return ;
         Solmu p = poista.vanhempi();
         while(p != null) {
-            if(Math.abs(p.vasen().korkeus()-p.oikea().korkeus()) > 1) {
+            if(korkeus(p.vasen())-korkeus(p.oikea()) == 2) {
                 vanhempi = p.vanhempi();
-                if(p.vasen().vasen().korkeus()-p.vasen().oikea().korkeus() == 2)
-                    p.asetaVasen(kiertoOikealle(p));
-                else if(p.oikea().oikea().korkeus()-p.oikea().vasen().korkeus() == 2)
-                    p.asetaOikea(kiertoVasemmalle(p));
-                else if(p.vasen().oikea().korkeus()-p.vasen().vasen().korkeus() == 2)
-                    p.asetaVasen(kaksoiskiertoOikealle(p));
+                if(korkeus(p.vasen().vasen()) > korkeus(p.vasen().oikea()))
+                    alipuu = kiertoOikealle(p);
                 else
-                    p.asetaOikea(kaksoiskiertoVasemmalle(p));
-                if(p.vanhempi() == null) {
-                    juuri = p;
+                    alipuu = kaksoiskiertoOikealle(p);
+                if(vanhempi == null) {
+                    juuri = alipuu;
                     return ;
                 }
+                System.out.println(vanhempi);
+                if(alipuu.tieto() < vanhempi.tieto())
+                    vanhempi.asetaVasen(alipuu);
+                else
+                    vanhempi.asetaOikea(alipuu);
+                p = vanhempi;
+            }    
+            if(korkeus(p.oikea())-korkeus(p.vasen()) == 2) { 
+                vanhempi = p.vanhempi();
+                if(korkeus(p.oikea().oikea()) > korkeus(p.oikea().vasen()))
+                    alipuu = kiertoVasemmalle(p);
+                else
+                    alipuu = kaksoiskiertoVasemmalle(p);
+                if(vanhempi == null) {
+                    juuri = alipuu;
+                    return ;
+                }
+                if(alipuu.tieto() < vanhempi.tieto())
+                    vanhempi.asetaVasen(alipuu);
+                else
+                    vanhempi.asetaOikea(alipuu);
                 p = vanhempi;
             } else {
-                p.asetaKorkeus(maksimi(p.vasen().korkeus(), p.oikea().korkeus())+1);
+                p.asetaKorkeus(maksimi(korkeus(p.vasen()), korkeus(p.oikea()))+1);
                 p = p.vanhempi();
             }
         }
@@ -181,7 +261,7 @@ public class AVLpuu {
                 juuri = null;
                 return poista;
             }
-            if(vanhempi.oikea().equals(poista))
+            if(vanhempi.oikea() != null && vanhempi.oikea().equals(poista))
                 vanhempi.asetaOikea(null);
             else
                 vanhempi.asetaVasen(null);
@@ -225,6 +305,7 @@ public class AVLpuu {
     public String tulosta(Solmu solmu) {
         
         if(solmu != null) {
+            //System.out.println("SOLMU: " + solmu + ", VASEN: " + solmu.vasen() + ", OIKEA: " + solmu.oikea());
             tulosta(solmu.vasen());
             //System.out.println(solmu.tieto());
             tulostus = tulostus+solmu.tieto()+" ";

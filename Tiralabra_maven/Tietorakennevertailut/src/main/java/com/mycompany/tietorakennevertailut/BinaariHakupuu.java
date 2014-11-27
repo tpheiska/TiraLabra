@@ -26,6 +26,8 @@ public class BinaariHakupuu {
      */
     public void lisaa(int arvo) {
         
+        if(etsi(arvo))
+            return ;
         Solmu uusi = new Solmu(arvo);
         if(juuri == null) {
             juuri = uusi;
@@ -44,7 +46,6 @@ public class BinaariHakupuu {
             else
                 vanhempi.asetaOikea(uusi);
         }
-        
     }
     
     /**
@@ -86,7 +87,7 @@ public class BinaariHakupuu {
                 juuri = null;
                 return poista;
             }
-            if(vanhempi.oikea().equals(poista))
+            if(vanhempi.oikea() != null && vanhempi.oikea().equals(poista))
                 vanhempi.asetaOikea(null);
             else
                 vanhempi.asetaVasen(null);
