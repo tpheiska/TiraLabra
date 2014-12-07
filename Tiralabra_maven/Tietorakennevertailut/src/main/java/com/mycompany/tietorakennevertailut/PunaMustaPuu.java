@@ -21,6 +21,11 @@ public class PunaMustaPuu {
         this.juuri = null;
     }
     
+    /**
+     * Solmun väri
+     * @param solmu
+     * @return palauttaa solmun värin.
+     */
     public char vari(Solmu solmu) {
         
         if(solmu == null)
@@ -211,6 +216,11 @@ public class PunaMustaPuu {
         return poista;
     }
     
+    /**
+     * Tarkistaa ja tarvittaessa muutttaa puun solmun lisäämisen jälkeen 
+     * punamustapuuksi 
+     * @param solmu lisätty solmu
+     */
     private void tasapainotaPoistonJalkeen(Solmu solmu) {
         
         Solmu w;
@@ -347,10 +357,12 @@ public class PunaMustaPuu {
         }
         return juuri;
     }
+    
     /**
      * Tulostetaan puun solmujen tietojen arvot suuruusjärjestyksessä.
      * @param solmu puun T alkiot voidaan tulostaa kutsumalla rekursiivista 
      * algoritmia parametrilla T.juuri
+     * @return palauttaa Stringin, jossa solmut on tulostettu kasvavaan järjestykseen.
      */
     public String tulosta(Solmu solmu) {
         
@@ -363,11 +375,62 @@ public class PunaMustaPuu {
         return tulostus.trim();
     }
     
+    
     @Override
     public String toString() {
         
         tulostus = "";
         //System.out.println(tulosta(juuri));
         return tulosta(juuri);
+    }
+    
+    public static void main(String args[]) {
+        
+        PunaMustaPuu pm = new PunaMustaPuu();
+        int lisattava[] = new int[10000000];
+        for(int i=0; i<10000000; i++) {
+            lisattava[i] = (int)(100000000*Math.random());
+        }
+        
+        int etsi[] = new int[10000000];
+        for(int i=0; i<10000000; i++) {
+            etsi[i] = (int)(100000000*Math.random());
+        }
+        
+        int poistettavat[] = new int[10000000];
+        for(int i=0; i<10000000; i++) {
+            etsi[i] = (int)(100000000*Math.random());
+        }
+        
+        long aikaAlussa = System.currentTimeMillis();  
+        for(int i=0; i<10000000; i++) {
+            pm.lisaa(lisattava[i]);
+        }  
+        long aikaLopussa = System.currentTimeMillis();  
+        System.out.println("Lisäämisiin kului aikaa: " + (aikaLopussa - aikaAlussa) + "ms.");
+        
+        aikaAlussa = System.currentTimeMillis();  
+        for(int i=0; i<10000000; i++) {
+            pm.etsi(etsi[i]);
+        }  
+        aikaLopussa = System.currentTimeMillis();  
+        System.out.println("Etsimisiin kului aikaa: " + (aikaLopussa - aikaAlussa) + "ms.");
+        
+        aikaAlussa = System.currentTimeMillis();  
+        pm.etsiMax();
+        aikaLopussa = System.currentTimeMillis();  
+        System.out.println("Suurimman alkion etsimiseen kului aikaa: " + (aikaLopussa - aikaAlussa) + "ms.");
+        
+        aikaAlussa = System.currentTimeMillis();  
+        pm.etsiMin();
+        aikaLopussa = System.currentTimeMillis();  
+        System.out.println("Pienimmän alkion etsimiseen kului aikaa: " + (aikaLopussa - aikaAlussa) + "ms.");
+
+        aikaAlussa = System.currentTimeMillis();  
+        for(int i=0; i<10000000; i++) {
+            pm.poista(poistettavat[i]);
+        }  
+        aikaLopussa = System.currentTimeMillis();  
+        System.out.println("Poistamisiin kului aikaa: " + (aikaLopussa - aikaAlussa) + "ms.");
     }
 }

@@ -401,4 +401,54 @@ public class AVLpuu {
         //System.out.println(tulosta(juuri));
         return tulosta(juuri);
     }
+    
+    public static void main(String args[]) {
+        
+        AVLpuu avl = new AVLpuu();
+        int lisattava[] = new int[10000000];
+        for(int i=0; i<10000000; i++) {
+            lisattava[i] = (int)(100000000*Math.random());
+        }
+        
+        int etsi[] = new int[10000000];
+        for(int i=0; i<10000000; i++) {
+            etsi[i] = (int)(100000000*Math.random());
+        }
+        
+        int poistettavat[] = new int[10000000];
+        for(int i=0; i<10000000; i++) {
+            etsi[i] = (int)(100000000*Math.random());
+        }
+        
+        long aikaAlussa = System.currentTimeMillis();  
+        for(int i=0; i<10000000; i++) {
+            avl.lisaa(lisattava[i]);
+        }  
+        long aikaLopussa = System.currentTimeMillis();  
+        System.out.println("Lisäämisiin kului aikaa: " + (aikaLopussa - aikaAlussa) + "ms.");
+        
+        aikaAlussa = System.currentTimeMillis();  
+        for(int i=0; i<10000000; i++) {
+            avl.etsi(etsi[i]);
+        }  
+        aikaLopussa = System.currentTimeMillis();  
+        System.out.println("Etsimisiin kului aikaa: " + (aikaLopussa - aikaAlussa) + "ms.");
+        
+        aikaAlussa = System.currentTimeMillis();  
+        avl.etsiMax();
+        aikaLopussa = System.currentTimeMillis();  
+        System.out.println("Suurimman alkion etsimiseen kului aikaa: " + (aikaLopussa - aikaAlussa) + "ms.");
+        
+        aikaAlussa = System.currentTimeMillis();  
+        avl.etsiMin();
+        aikaLopussa = System.currentTimeMillis();  
+        System.out.println("Pienimmän alkion etsimiseen kului aikaa: " + (aikaLopussa - aikaAlussa) + "ms.");
+
+        aikaAlussa = System.currentTimeMillis();  
+        for(int i=0; i<10000000; i++) {
+            avl.poista(poistettavat[i]);
+        }  
+        aikaLopussa = System.currentTimeMillis();  
+        System.out.println("Poistamisiin kului aikaa: " + (aikaLopussa - aikaAlussa) + "ms.");
+    }
 }
