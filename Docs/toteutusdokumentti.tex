@@ -1,0 +1,152 @@
+\documentclass[12pt,a4paper,leqno,titlepage,twoside]{article}
+
+\makeatletter
+\newcommand{\ps@pagenumberfoot}{
+\renewcommand{\@oddfoot}{\hfil\thepage}
+\renewcommand{\@evenfoot}{\thepage\hfil}
+}
+\makeatother
+
+\input{Tyyli.sty}
+\pagestyle{pagenumberfoot}
+
+\begin{document}
+
+\title{Toteutusdokumentti}
+\author{Tomi Heiskanen}
+\maketitle
+
+\newpage
+\section*{Tietorakenteet}
+
+Tietorakenteet on toteutettu omina java-luokkina. Kaikissa puissa on solmuksi
+nimetty alkio ja se on toteutettu omana luokkanaan ja siinä on tarvittavat
+ominaisuudet jokaiselle puulle.
+
+\section*{O-analyysit}
+
+\subsection*{Binäärihakupuu}
+
+\begin{description}
+\item{\textbf{Lisääminen:}} Koska metodissa olevan loopin operaatiot ovat vakioaikaisia.
+ja looppi suoritetaan korkeintaan $n$-kertaa, sillä lisäykset voivat pahimmassa
+tapauksessa tapahtua suuruusjärjestyksessä, saadaan lisäämisen aikavaativuudeksi
+$O(n)$.
+
+\item{\textbf{Poistaminen:}} Metodissa olevat operaatiot ovat vakioaikaisia. Solmun
+etsiminen suoritetaan toisella metodilla ja se on rekursiivinen. Rekursio
+suoritetaan pahimmillaan $n$- kertaa, sillä lisäämiset voivat tapahtua suuruusjärjestyksessä
+tai jos puuhun lisätään ja poistetaan sopivasti siten, että puu vastaa listaa.
+Poistamiselle saadaan siten aikavaativuudeksi $O(n)$.
+
+\item{\textbf{Etsiminen:}} Etsiminen suoritetaan rekursiivisella metodilla ja
+rekursio suoritetaan pahimmassa tapauksessa $n$-kertaa, kuten edellä todettiin. 
+Etsimisen aikavaativuudeksi saadaan $O(n)$.
+
+\item{\textbf{Pienimmän ja suurimman alkion etsiminen:}} Pienin ja suurin alkio
+löytyvät aina lehdestä tai juuresta ja siten metodissa oleva looppi suoritetaan 
+pahimmassa tapauksessa $n$-kertaa. Aikavaativuudeksi saadaan tällöin $O(n)$.
+\end{description}
+
+\subsection*{AVL-puu}
+
+\begin{description}
+\item{\textbf{Lisääminen:}} Lisääminen tapahtuu ensin kuten binäärihakupuulle
+ja sen aikavaatimus on $O(h)$, missä $h$ on korkeus ja koska AVL-puu on tasapainoinen,
+niin lisäämisen aikavaatimus on $O(\log n)$. Koska lisäämisen jälkeen suoritettavat 
+kierrot ovat vakioaikaisia ja niitä suoritetaan korkeintaan kaksi kertaa ja pahimmassa 
+tapauksessa kuljetaan lisätystä solmusta juureen, niin tämän aikavaativuudeksi 
+saadaan $O(\log n)$. Lisääminen koostuu siis kahdesta aikavaativuudeltaan $O(\log n)$
+osasta ja siten lisäämisen aikavaativuus on $O(\log n)$.
+
+\item{\textbf{Poistaminen:}} Poistaminen tapahtuu ensin kuten binäärihakupuulle
+ja sen aikavaatimus on $O(h)$, missä $h$ on korkeus ja koska AVL-puu on tasapainoinen,
+niin poistamisen aikavaatimus on $O(\log n)$. Koska poistamisen jälkeen suoritettavat
+kierrot ovat vakioaikaisia ja niitä suoritetaan korkeintaan kaksi kertaa ja pahimmassa
+tapauksessa kuljetaan poistetusta solmusta juureen, niin tämän aikavaativuudeksi
+saadaan $O(\log n)$. Poistaminen koostuu siis kahdesta aikavaativuudeltaan $O(\log n)$
+osasta ja siten poistamisen aikavaativuus on $O(\log n)$.
+
+\item{\textbf{Etsiminen:}} Etsiminen suoritetaan rekursiivisella metodilla ja
+rekursio suoritetaan korkeintaan $\log n$ kertaa. Etsimisen aikavaativuudeksi
+saadaan $O(\log n)$.
+
+\item{\textbf{Pienimmän ja suurimman alkion etsiminen:}} Pienin ja suurin alkio
+löytyy aina lehdestä ja metodissa oleva looppi suoritetaan siis $\log n$-kertaa.
+Aikavaativuudeski saadaan tällöin $O(\log n)$.
+\end{description}
+
+\subsection*{AVL-puu}
+
+\begin{description}
+\item{\textbf{Lisääminen:}} Lisääminen tapahtuu ensin kuten binäärihakupuulle
+ja sen aikavaatimus on $O(h)$, missä $h$ on korkeus ja koska AVL-puu on tasapainoinen,
+niin lisäämisen aikavaatimus on $O(\log n)$. Koska lisäämisen jälkeen suoritettavat
+kierrot ovat vakioaikaisia ja niitä suoritetaan korkeintaan kaksi kertaa ja pahimmassa
+tapauksessa kuljetaan lisätystä solmusta juureen, niin tämän aikavaativuudeksi
+saadaan $O(\log n)$. Lisääminen koostuu siis kahdesta aikavaativuudeltaan $O(\log n)$
+osasta ja siten lisäämisen aikavaativuus on $O(\log n)$.
+
+\item{\textbf{Poistaminen:}} Poistaminen tapahtuu ensin kuten binäärihakupuulle
+ja sen aikavaatimus on $O(h)$, missä $h$ on korkeus ja koska AVL-puu on tasapainoinen,
+niin poistamisen aikavaatimus on $O(\log n)$. Koska poistamisen jälkeen suoritettavat
+kierrot ovat vakioaikaisia ja niitä suoritetaan korkeintaan kaksi kertaa ja pahimmassa
+tapauksessa kuljetaan poistetusta solmusta juureen, niin tämän aikavaativuudeksi
+saadaan $O(\log n)$. Poistaminen koostuu siis kahdesta aikavaativuudeltaan $O(\log n)$
+osasta ja siten poistamisen aikavaativuus on $O(\log n)$.
+
+\item{\textbf{Etsiminen:}} Etsiminen suoritetaan rekursiivisella metodilla ja
+rekursio suoritetaan korkeintaan $\log n$ kertaa. Etsimisen aikavaativuudeksi
+saadaan $O(\log n)$.
+
+\item{\textbf{Pienimmän ja suurimman alkion etsiminen:}} Pienin ja suurin alkio
+löytyy aina lehdestä ja metodissa oleva looppi suoritetaan siis $\log n$-kertaa.
+Aikavaativuudeski saadaan tällöin $O(\log n)$.
+\end{description}
+
+\subsection*{Punamustapuu}
+
+\begin{description}
+\item{\textbf{Lisääminen:}} Lisääminen tapahtuu ensin kuten binäärihakupuulle
+ja sen aikavaatimus on $O(h)$, missä $h$ on korkeus ja koska punamustapuu on tasapainoinen,
+niin lisäämisen aikavaatimus on $O(\log n)$. Koska lisäämisen jälkeen suoritettavat
+kierrot ovat vakioaikaisia ja niitä suoritetaan korkeintaan kaksi kertaa ja pahimmassa
+tapauksessa kuljetaan lisätystä solmusta juureen, niin tämän aikavaativuudeksi
+saadaan $O(\log n)$. Lisääminen koostuu siis kahdesta aikavaativuudeltaan $O(\log n)$
+osasta ja siten lisäämisen aikavaativuus on $O(\log n)$.
+
+\item{\textbf{Poistaminen:}} Poistaminen tapahtuu ensin kuten binäärihakupuulle
+ja sen aikavaatimus on $O(h)$, missä $h$ on korkeus ja koska AVL-puu on tasapainoinen,
+niin poistamisen aikavaatimus on $O(\log n)$. Koska poistamisen jälkeen suoritettavat
+kierrot ovat vakioaikaisia ja niitä suoritetaan korkeintaan kaksi kertaa ja pahimmassa
+tapauksessa kuljetaan poistetusta solmusta juureen, niin tämän aikavaativuudeksi
+saadaan $O(\log n)$. Poistaminen koostuu siis kahdesta aikavaativuudeltaan $O(\log n)$
+osasta ja siten poistamisen aikavaativuus on $O(\log n)$.
+
+\item{\textbf{Etsiminen:}} Etsiminen suoritetaan rekursiivisella metodilla ja
+rekursio suoritetaan korkeintaan $\log n$ kertaa. Etsimisen aikavaativuudeksi
+saadaan $O(\log n)$.
+
+\item{\textbf{Pienimmän ja suurimman alkion etsiminen:}} Pienin ja suurin alkio
+löytyy aina lehdestä ja metodissa oleva looppi suoritetaan siis $\log n$-kertaa.
+Aikavaativuudeski saadaan tällöin $O(\log n)$.
+\end{description}
+
+\section*{Suorituskyky}
+
+\begin{table}
+\begin{tabular}{|p{0.2\textwidth}|p{0.2\textwidth}|p{0.2\textwidth}|p{0.2\textwidth}|p{0.2\textwidth}|}
+  \hline
+  Toiminto & Bi\-nää\-ri\-ha\-ku\-puu & AVL-puu & Pu\-na\-mus\-ta\-puu & B-puu \\
+  \hline
+  \hline
+  Lisääminen & ms & ms & ms & ms \\
+  Poistaminen & ms & ms & ms & ms \\
+  Etsiminen & ms & ms & ms & ms \\
+  Pienimmän ja suurimman etsiminen & ms & ms & ms & ms \\
+  \hline
+\end{tabular}
+\end{table}
+
+
+\end{document}
