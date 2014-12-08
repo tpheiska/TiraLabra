@@ -391,23 +391,23 @@ public class PunaMustaPuu {
         for(int i=0; i<1000; i++) {
             lisattava1[i] = (int)(10000*Math.random());
         }
-        int lisattava2[] = new int[1000000];
+        int lisattava2[] = new int[100000];
+        for(int i=0; i<100000; i++) {
+            lisattava2[i] = (int)(1000000*Math.random());
+        }
+        int lisattava3[] = new int[1000000];
         for(int i=0; i<1000000; i++) {
-            lisattava2[i] = (int)(10000000*Math.random());
-        }
-        int lisattava3[] = new int[10000000];
-        for(int i=0; i<10000000; i++) {
-            lisattava3[i] = (int)(100000000*Math.random());
+            lisattava3[i] = (int)(10000000*Math.random());
         }
         
-        int etsi[] = new int[10000000];
-        for(int i=0; i<10000000; i++) {
-            etsi[i] = (int)(100000000*Math.random());
+        int etsi[] = new int[1000000];
+        for(int i=0; i<1000000; i++) {
+            etsi[i] = (int)(10000000*Math.random());
         }
         
-        int poistettavat[] = new int[10000000];
-        for(int i=0; i<10000000; i++) {
-            etsi[i] = (int)(100000000*Math.random());
+        int poistettavat[] = new int[1000000];
+        for(int i=0; i<1000000; i++) {
+            etsi[i] = (int)(10000000*Math.random());
         }
         
         long aikaAlussa = System.currentTimeMillis();  
@@ -419,22 +419,22 @@ public class PunaMustaPuu {
         
         pm = new PunaMustaPuu();
         aikaAlussa = System.currentTimeMillis();  
-        for(int i=0; i<1000000; i++) {
+        for(int i=0; i<100000; i++) {
             pm.lisaa(lisattava2[i]);
+        }  
+        aikaLopussa = System.currentTimeMillis();  
+        System.out.println("Lisäämisiin kului aikaa(100000): " + (aikaLopussa - aikaAlussa) + "ms.");
+        
+        pm = new PunaMustaPuu();
+        aikaAlussa = System.currentTimeMillis();  
+        for(int i=0; i<1000000; i++) {
+            pm.lisaa(lisattava3[i]);
         }  
         aikaLopussa = System.currentTimeMillis();  
         System.out.println("Lisäämisiin kului aikaa(1000000): " + (aikaLopussa - aikaAlussa) + "ms.");
         
-        pm = new PunaMustaPuu();
         aikaAlussa = System.currentTimeMillis();  
-        for(int i=0; i<10000000; i++) {
-            pm.lisaa(lisattava3[i]);
-        }  
-        aikaLopussa = System.currentTimeMillis();  
-        System.out.println("Lisäämisiin kului aikaa(10000000): " + (aikaLopussa - aikaAlussa) + "ms.");
-        
-        aikaAlussa = System.currentTimeMillis();  
-        for(int i=0; i<10000000; i++) {
+        for(int i=0; i<1000000; i++) {
             pm.etsi(etsi[i]);
         }  
         aikaLopussa = System.currentTimeMillis();  
@@ -451,7 +451,7 @@ public class PunaMustaPuu {
         System.out.println("Pienimmän alkion etsimiseen kului aikaa: " + (aikaLopussa - aikaAlussa) + "ms.");
 
         aikaAlussa = System.currentTimeMillis();  
-        for(int i=0; i<10000000; i++) {
+        for(int i=0; i<1000000; i++) {
             pm.poista(poistettavat[i]);
         }  
         aikaLopussa = System.currentTimeMillis();  
