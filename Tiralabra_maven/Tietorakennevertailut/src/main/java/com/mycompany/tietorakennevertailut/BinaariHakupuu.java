@@ -214,8 +214,8 @@ public class BinaariHakupuu {
     public static void main(String args[]) {
         
         BinaariHakupuu bin = new BinaariHakupuu();
-        int lisattava1[] = new int[10000];
-        for(int i=0; i<10000; i++) {
+        int lisattava1[] = new int[1000];
+        for(int i=0; i<1000; i++) {
             lisattava1[i] = (int)(100000*Math.random());
         }
         int lisattava2[] = new int[1000000];
@@ -238,11 +238,11 @@ public class BinaariHakupuu {
         }
         
         long aikaAlussa = System.currentTimeMillis();
-        for(int i=0; i<10000; i++) {
+        for(int i=0; i<1000; i++) {
             bin.lisaa(lisattava1[i]);
         }   
         long aikaLopussa = System.currentTimeMillis();  
-        System.out.println("Lisäämisiin kului aikaa(10000): " + (aikaLopussa - aikaAlussa) + "ms.");
+        System.out.println("Lisäämisiin kului aikaa(1000): " + (aikaLopussa - aikaAlussa) + "ms.");
         
         bin = new BinaariHakupuu();
         aikaAlussa = System.currentTimeMillis();  

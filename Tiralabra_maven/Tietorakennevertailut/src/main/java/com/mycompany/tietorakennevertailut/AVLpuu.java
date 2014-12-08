@@ -451,7 +451,6 @@ public class AVLpuu {
         aikaLopussa = System.currentTimeMillis();
         System.out.println("Lisäämisiin kului aikaa(10000000): " + (aikaLopussa - aikaAlussa) + "ms.");
         
-        avl = new AVLpuu();
         aikaAlussa = System.currentTimeMillis();  
         for(int i=0; i<10000000; i++) {
             avl.etsi(etsi[i]);
