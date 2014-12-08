@@ -158,7 +158,7 @@ public class AVLpuu {
     
     /**
      * Lisätään uusi solmu puuhun
-     * @param solmu puun juuri
+     * @param solmu puun/alipuun juuri
      * @param arvo lisättävä arvo
      * @return viite lisättyyn solmuun
      */

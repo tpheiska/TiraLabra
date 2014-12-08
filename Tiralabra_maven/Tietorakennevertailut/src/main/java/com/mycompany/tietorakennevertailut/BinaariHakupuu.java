@@ -137,7 +137,7 @@ public class BinaariHakupuu {
      * Etsitään alipuusta arvoa rekursiivisesti
      * @param solmu alipuun juuri solmu
      * @param arvo etsitty arvo
-     * @return solmun, jonka tieto-kenttä vastaa arvoa tai null, jos arvoa ei
+     * @return viitteen solmuun, jonka tieto-kenttä vastaa arvoa tai null, jos arvoa ei
      * löydy puusta
      */
     private Solmu etsi(Solmu solmu, int arvo) {
