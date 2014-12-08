@@ -405,9 +405,17 @@ public class AVLpuu {
     public static void main(String args[]) {
         
         AVLpuu avl = new AVLpuu();
-        int lisattava[] = new int[10000000];
+        int lisattava1[] = new int[1000];
+        for(int i=0; i<1000; i++) {
+            lisattava1[i] = (int)(10000*Math.random());
+        }
+        int lisattava2[] = new int[1000000];
+        for(int i=0; i<1000000; i++) {
+            lisattava2[i] = (int)(10000000*Math.random());
+        }
+        int lisattava3[] = new int[10000000];
         for(int i=0; i<10000000; i++) {
-            lisattava[i] = (int)(100000000*Math.random());
+            lisattava3[i] = (int)(100000000*Math.random());
         }
         
         int etsi[] = new int[10000000];
@@ -421,12 +429,29 @@ public class AVLpuu {
         }
         
         long aikaAlussa = System.currentTimeMillis();  
-        for(int i=0; i<10000000; i++) {
-            avl.lisaa(lisattava[i]);
-        }  
+        for(int i=0; i<1000; i++) {
+            avl.lisaa(lisattava1[i]);
+        }
         long aikaLopussa = System.currentTimeMillis();  
-        System.out.println("Lisäämisiin kului aikaa: " + (aikaLopussa - aikaAlussa) + "ms.");
+        System.out.println("Lisäämisiin kului aikaa(1000): " + (aikaLopussa - aikaAlussa) + "ms.");
         
+        avl = new AVLpuu();
+        aikaAlussa = System.currentTimeMillis();
+        for(int i=0; i<1000000; i++) {
+            avl.lisaa(lisattava2[i]);
+        }
+        aikaLopussa = System.currentTimeMillis();
+        System.out.println("Lisäämisiin kului aikaa(1000000): " + (aikaLopussa - aikaAlussa) + "ms.");
+        
+        avl = new AVLpuu();
+        aikaAlussa = System.currentTimeMillis();
+        for(int i=0; i<10000000; i++) {
+            avl.lisaa(lisattava3[i]);
+        }
+        aikaLopussa = System.currentTimeMillis();
+        System.out.println("Lisäämisiin kului aikaa(10000000): " + (aikaLopussa - aikaAlussa) + "ms.");
+        
+        avl = new AVLpuu();
         aikaAlussa = System.currentTimeMillis();  
         for(int i=0; i<10000000; i++) {
             avl.etsi(etsi[i]);
