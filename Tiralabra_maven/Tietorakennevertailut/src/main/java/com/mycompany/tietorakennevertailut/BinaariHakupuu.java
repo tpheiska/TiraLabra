@@ -52,6 +52,8 @@ public class BinaariHakupuu {
      * Tulostetaan puun solmujen tietojen arvot suuruusjärjestyksessä.
      * @param solmu puun T alkiot voidaan tulostaa kutsumalla rekursiivista 
      * algoritmia parametrilla T.juuri
+     * @return palauttaa puuhun talletettujen solmujen tiedot suuruusjärjestyksessä
+     * pienimmästä alkaen
      */
     public String tulosta(Solmu solmu) {
         
@@ -203,6 +205,10 @@ public class BinaariHakupuu {
         return juuri;
     }
     
+    /**
+     * @return Palauttaa puuhun tallennettujen solmujen tiedot suuruusjärjestyksessä
+     * pienimmästä alkaen.
+     */
     @Override
     public String toString() {
         
@@ -211,77 +217,51 @@ public class BinaariHakupuu {
         return tulosta(juuri);
     }
     
+    /**
+     * Testipääohjelma.
+     * @param args
+     */
     public static void main(String args[]) {
         
         BinaariHakupuu bin = new BinaariHakupuu();
-        int lisattava1[] = new int[1000];
-        for(int i=0; i<1000; i++) {
-            lisattava1[i] = (int)(100000*Math.random());
+        int maara = 1000;
+        int lisattavat[] = new int[maara], etsittavat[] = new int[10000];
+        for(int i=0; i<maara; i++) {
+            lisattavat[i] = i;
         }
-        int lisattava2[] = new int[100000];
-        for(int i=0; i<100000; i++) {
-            lisattava2[i] = (int)(1000000*Math.random());
-        }
-        int lisattava3[] = new int[10000000];
-        for(int i=0; i<10000000; i++) {
-            lisattava3[i] = (int)(10000000*Math.random());
+        for(int i=0; i<10000; i++) {
+            etsittavat[i] = (int)(2*maara*Math.random());
         }
         
-        int etsi[] = new int[1000000];
-        for(int i=0; i<1000000; i++) {
-            etsi[i] = (int)(10000000*Math.random());
+        long aikaAlussa = System.currentTimeMillis();  
+        for(int i=0; i<maara; i++) {
+            bin.lisaa(lisattavat[i]);
         }
-        
-        int poistettavat[] = new int[1000000];
-        for(int i=0; i<1000000; i++) {
-            etsi[i] = (int)(10000000*Math.random());
-        }
-        
-        long aikaAlussa = System.currentTimeMillis();
-        for(int i=0; i<1000; i++) {
-            bin.lisaa(lisattava1[i]);
-        }   
         long aikaLopussa = System.currentTimeMillis();  
-        System.out.println("Lisäämisiin kului aikaa(1000): " + (aikaLopussa - aikaAlussa) + "ms.");
+        System.out.println("Lisäämisiin kului aikaa(bin: "+maara+"): " + (aikaLopussa - aikaAlussa) + "ms.");
         
-        bin = new BinaariHakupuu();
         aikaAlussa = System.currentTimeMillis();  
-        for(int i=0; i<100000; i++) {
-            bin.lisaa(lisattava2[i]);
+        for(int i=0; i<10000; i++) {
+            bin.etsi(etsittavat[i]);
         }  
         aikaLopussa = System.currentTimeMillis();  
-        System.out.println("Lisäämiseen kului aikaa (100000): " + (aikaLopussa - aikaAlussa) + "ms.");
-        
-        bin = new BinaariHakupuu();
-        aikaAlussa = System.currentTimeMillis();  
-        for(int i=0; i<1000000; i++) {
-            bin.lisaa(lisattava3[i]);
-        }
-        aikaLopussa = System.currentTimeMillis();  
-        System.out.println("Lisäämiseen kului aikaa (1000000): " + (aikaLopussa - aikaAlussa) + "ms.");
-        
-        aikaAlussa = System.currentTimeMillis();  
-        for(int i=0; i<1000000; i++) {
-            bin.etsi(etsi[i]);
-        }  
-        aikaLopussa = System.currentTimeMillis();  
-        System.out.println("Etsimisiin kului aikaa: " + (aikaLopussa - aikaAlussa) + "ms.");
+        System.out.println("Etsimisiin kului aikaa("+maara+"): " + (aikaLopussa - aikaAlussa) + "ms.");
         
         aikaAlussa = System.currentTimeMillis();  
         bin.etsiMax();
         aikaLopussa = System.currentTimeMillis();  
-        System.out.println("Suurimman alkion etsimiseen kului aikaa: " + (aikaLopussa - aikaAlussa) + "ms.");
+        System.out.println("Suurimman alkion etsimiseen kului aikaa("+maara+"): " + (aikaLopussa - aikaAlussa) + "ms.");
         
         aikaAlussa = System.currentTimeMillis();  
         bin.etsiMin();
         aikaLopussa = System.currentTimeMillis();  
-        System.out.println("Pienimmän alkion etsimiseen kului aikaa: " + (aikaLopussa - aikaAlussa) + "ms.");
+        System.out.println("Pienimmän alkion etsimiseen kului aikaa("+maara+"): " + (aikaLopussa - aikaAlussa) + "ms.");
 
         aikaAlussa = System.currentTimeMillis();  
-        for(int i=0; i<1000000; i++) {
-            bin.poista(poistettavat[i]);
+        for(int i=0; i<maara; i++) {
+            bin.poista(lisattavat[i]);
         }  
         aikaLopussa = System.currentTimeMillis();  
-        System.out.println("Poistamisiin kului aikaa: " + (aikaLopussa - aikaAlussa) + "ms.");
+        System.out.println("Poistamisiin kului aikaa("+maara+"): " + (aikaLopussa - aikaAlussa) + "ms.");
     }
 }

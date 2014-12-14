@@ -54,6 +54,7 @@ public class AVLpuu {
      */
     private Solmu kiertoOikealle(Solmu solmu) {
         
+        //System.out.println("solmun tieto: "+solmu);
         Solmu solmu2 = solmu.vasen();
         solmu2.asetaVanhempi(solmu.vanhempi());
         solmu.asetaVanhempi(solmu2);
@@ -194,10 +195,11 @@ public class AVLpuu {
      */
     public void poista(int arvo) {
         
-        Solmu vanhempi, poista = poista(juuri, arvo), alipuu;
-        if(poista == null)
-            return ;
-        Solmu p = poista.vanhempi();
+        Solmu vanhempi, poista = poista(juuri, arvo), alipuu, p;
+        if(poista != null)
+            p = poista.vanhempi();
+        else
+            return;
         while(p != null) {
             if(korkeus(p.vasen())-korkeus(p.oikea()) == 2) {
                 vanhempi = p.vanhempi();
@@ -207,7 +209,7 @@ public class AVLpuu {
                     alipuu = kaksoiskiertoOikealle(p);
                 if(vanhempi == null) {
                     juuri = alipuu;
-                    return ;
+                    return;
                 }
                 System.out.println(vanhempi);
                 if(alipuu.tieto() < vanhempi.tieto())
@@ -224,7 +226,7 @@ public class AVLpuu {
                     alipuu = kaksoiskiertoVasemmalle(p);
                 if(vanhempi == null) {
                     juuri = alipuu;
-                    return ;
+                    return;
                 }
                 if(alipuu.tieto() < vanhempi.tieto())
                     vanhempi.asetaVasen(alipuu);
@@ -301,6 +303,8 @@ public class AVLpuu {
      * Tulostetaan puun solmujen tietojen arvot suuruusjärjestyksessä.
      * @param solmu puun T alkiot voidaan tulostaa kutsumalla rekursiivista 
      * algoritmia parametrilla T.juuri
+     * @return palauttaa puuhun talletettujen solmujen tiedot suuruusjärjestyksessä
+     * pienimmästä alkaen
      */
     public String tulosta(Solmu solmu) {
         
@@ -394,6 +398,10 @@ public class AVLpuu {
         return juuri;
     }
     
+    /**
+     * @return Palauttaa puuhun tallennettujen solmujen tiedot suuruusjärjestyksessä
+     * pienimmästä alkaen.
+     */
     @Override
     public String toString() {
         
@@ -402,77 +410,51 @@ public class AVLpuu {
         return tulosta(juuri);
     }
     
+    /**
+     * Testipääohjelma.
+     * @param args
+     */
     public static void main(String args[]) {
         
         AVLpuu avl = new AVLpuu();
-        int lisattava1[] = new int[1000];
-        for(int i=0; i<1000; i++) {
-            lisattava1[i] = (int)(10000*Math.random());
+        int maara = 400000;
+        int lisattavat[] = new int[maara], etsittavat[] = new int[10000];
+        for(int i=0; i<maara; i++) {
+            lisattavat[i] = i;
         }
-        int lisattava2[] = new int[100000];
-        for(int i=0; i<100000; i++) {
-            lisattava2[i] = (int)(1000000*Math.random());
-        }
-        int lisattava3[] = new int[1000000];
-        for(int i=0; i<1000000; i++) {
-            lisattava3[i] = (int)(10000000*Math.random());
-        }
-        
-        int etsi[] = new int[1000000];
-        for(int i=0; i<1000000; i++) {
-            etsi[i] = (int)(10000000*Math.random());
-        }
-        
-        int poistettavat[] = new int[1000000];
-        for(int i=0; i<1000000; i++) {
-            etsi[i] = (int)(10000000*Math.random());
+        for(int i=0; i<10000; i++) {
+            etsittavat[i] = (int)(2*maara*Math.random());
         }
         
         long aikaAlussa = System.currentTimeMillis();  
-        for(int i=0; i<1000; i++) {
-            avl.lisaa(lisattava1[i]);
+        for(int i=0; i<maara; i++) {
+            avl.lisaa(lisattavat[i]);
         }
         long aikaLopussa = System.currentTimeMillis();  
-        System.out.println("Lisäämisiin kului aikaa(1000): " + (aikaLopussa - aikaAlussa) + "ms.");
-        
-        avl = new AVLpuu();
-        aikaAlussa = System.currentTimeMillis();
-        for(int i=0; i<100000; i++) {
-            avl.lisaa(lisattava2[i]);
-        }
-        aikaLopussa = System.currentTimeMillis();
-        System.out.println("Lisäämisiin kului aikaa(100000): " + (aikaLopussa - aikaAlussa) + "ms.");
-        
-        avl = new AVLpuu();
-        aikaAlussa = System.currentTimeMillis();
-        for(int i=0; i<1000000; i++) {
-            avl.lisaa(lisattava3[i]);
-        }
-        aikaLopussa = System.currentTimeMillis();
-        System.out.println("Lisäämisiin kului aikaa(1000000): " + (aikaLopussa - aikaAlussa) + "ms.");
+        System.out.println("Lisäämisiin kului aikaa(avl: "+maara+"): " + (aikaLopussa - aikaAlussa) + "ms.");
         
         aikaAlussa = System.currentTimeMillis();  
-        for(int i=0; i<1000000; i++) {
-            avl.etsi(etsi[i]);
+        for(int i=0; i<10000; i++) {
+            avl.etsi(etsittavat[i]);
         }  
         aikaLopussa = System.currentTimeMillis();  
-        System.out.println("Etsimisiin kului aikaa: " + (aikaLopussa - aikaAlussa) + "ms.");
+        System.out.println("Etsimisiin kului aikaa("+maara+"): " + (aikaLopussa - aikaAlussa) + "ms.");
         
         aikaAlussa = System.currentTimeMillis();  
         avl.etsiMax();
         aikaLopussa = System.currentTimeMillis();  
-        System.out.println("Suurimman alkion etsimiseen kului aikaa: " + (aikaLopussa - aikaAlussa) + "ms.");
+        System.out.println("Suurimman alkion etsimiseen kului aikaa("+maara+"): " + (aikaLopussa - aikaAlussa) + "ms.");
         
         aikaAlussa = System.currentTimeMillis();  
         avl.etsiMin();
         aikaLopussa = System.currentTimeMillis();  
-        System.out.println("Pienimmän alkion etsimiseen kului aikaa: " + (aikaLopussa - aikaAlussa) + "ms.");
+        System.out.println("Pienimmän alkion etsimiseen kului aikaa("+maara+"): " + (aikaLopussa - aikaAlussa) + "ms.");
 
         aikaAlussa = System.currentTimeMillis();  
-        for(int i=0; i<1000000; i++) {
-            avl.poista(poistettavat[i]);
+        for(int i=0; i<maara; i++) {
+            avl.poista(lisattavat[i]);
         }  
         aikaLopussa = System.currentTimeMillis();  
-        System.out.println("Poistamisiin kului aikaa: " + (aikaLopussa - aikaAlussa) + "ms.");
+        System.out.println("Poistamisiin kului aikaa("+maara+"): " + (aikaLopussa - aikaAlussa) + "ms.");
     }
 }

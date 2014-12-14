@@ -362,7 +362,8 @@ public class PunaMustaPuu {
      * Tulostetaan puun solmujen tietojen arvot suuruusjärjestyksessä.
      * @param solmu puun T alkiot voidaan tulostaa kutsumalla rekursiivista 
      * algoritmia parametrilla T.juuri
-     * @return palauttaa Stringin, jossa solmut on tulostettu kasvavaan järjestykseen.
+     * @return palauttaa puuhun talletettujen solmujen tiedot suuruusjärjestyksessä
+     * pienimmästä alkaen
      */
     public String tulosta(Solmu solmu) {
         
@@ -375,7 +376,10 @@ public class PunaMustaPuu {
         return tulostus.trim();
     }
     
-    
+    /**
+     * @return Palauttaa puuhun tallennettujen solmujen tiedot suuruusjärjestyksessä
+     * pienimmästä alkaen.
+     */
     @Override
     public String toString() {
         
@@ -384,77 +388,51 @@ public class PunaMustaPuu {
         return tulosta(juuri);
     }
     
+    /**
+     * Testipääohjelma.
+     * @param args
+     */
     public static void main(String args[]) {
         
         PunaMustaPuu pm = new PunaMustaPuu();
-        int lisattava1[] = new int[1000];
-        for(int i=0; i<1000; i++) {
-            lisattava1[i] = (int)(10000*Math.random());
+        int maara = 200000;
+        int lisattavat[] = new int[maara], etsittavat[] = new int[10000];
+        for(int i=0; i<maara; i++) {
+            lisattavat[i] = i;
         }
-        int lisattava2[] = new int[100000];
-        for(int i=0; i<100000; i++) {
-            lisattava2[i] = (int)(1000000*Math.random());
-        }
-        int lisattava3[] = new int[1000000];
-        for(int i=0; i<1000000; i++) {
-            lisattava3[i] = (int)(10000000*Math.random());
-        }
-        
-        int etsi[] = new int[1000000];
-        for(int i=0; i<1000000; i++) {
-            etsi[i] = (int)(10000000*Math.random());
-        }
-        
-        int poistettavat[] = new int[1000000];
-        for(int i=0; i<1000000; i++) {
-            etsi[i] = (int)(10000000*Math.random());
+        for(int i=0; i<10000; i++) {
+            etsittavat[i] = (int)(40000*Math.random());
         }
         
         long aikaAlussa = System.currentTimeMillis();  
-        for(int i=0; i<1000; i++) {
-            pm.lisaa(lisattava1[i]);
-        }  
+        for(int i=0; i<maara; i++) {
+            pm.lisaa(lisattavat[i]);
+        }
         long aikaLopussa = System.currentTimeMillis();  
-        System.out.println("Lisäämisiin kului aikaa(1000): " + (aikaLopussa - aikaAlussa) + "ms.");
-        
-        pm = new PunaMustaPuu();
-        aikaAlussa = System.currentTimeMillis();  
-        for(int i=0; i<100000; i++) {
-            pm.lisaa(lisattava2[i]);
-        }  
-        aikaLopussa = System.currentTimeMillis();  
-        System.out.println("Lisäämisiin kului aikaa(100000): " + (aikaLopussa - aikaAlussa) + "ms.");
-        
-        pm = new PunaMustaPuu();
-        aikaAlussa = System.currentTimeMillis();  
-        for(int i=0; i<1000000; i++) {
-            pm.lisaa(lisattava3[i]);
-        }  
-        aikaLopussa = System.currentTimeMillis();  
-        System.out.println("Lisäämisiin kului aikaa(1000000): " + (aikaLopussa - aikaAlussa) + "ms.");
+        System.out.println("Lisäämisiin kului aikaa(pm: "+maara+"): " + (aikaLopussa - aikaAlussa) + "ms.");
         
         aikaAlussa = System.currentTimeMillis();  
-        for(int i=0; i<1000000; i++) {
-            pm.etsi(etsi[i]);
+        for(int i=0; i<10000; i++) {
+            pm.etsi(etsittavat[i]);
         }  
         aikaLopussa = System.currentTimeMillis();  
-        System.out.println("Etsimisiin kului aikaa: " + (aikaLopussa - aikaAlussa) + "ms.");
+        System.out.println("Etsimisiin kului aikaa("+maara+"): " + (aikaLopussa - aikaAlussa) + "ms.");
         
         aikaAlussa = System.currentTimeMillis();  
         pm.etsiMax();
         aikaLopussa = System.currentTimeMillis();  
-        System.out.println("Suurimman alkion etsimiseen kului aikaa: " + (aikaLopussa - aikaAlussa) + "ms.");
+        System.out.println("Suurimman alkion etsimiseen kului aikaa("+maara+"): " + (aikaLopussa - aikaAlussa) + "ms.");
         
         aikaAlussa = System.currentTimeMillis();  
         pm.etsiMin();
         aikaLopussa = System.currentTimeMillis();  
-        System.out.println("Pienimmän alkion etsimiseen kului aikaa: " + (aikaLopussa - aikaAlussa) + "ms.");
+        System.out.println("Pienimmän alkion etsimiseen kului aikaa("+maara+"): " + (aikaLopussa - aikaAlussa) + "ms.");
 
         aikaAlussa = System.currentTimeMillis();  
-        for(int i=0; i<1000000; i++) {
-            pm.poista(poistettavat[i]);
+        for(int i=0; i<maara; i++) {
+            pm.poista(lisattavat[i]);
         }  
         aikaLopussa = System.currentTimeMillis();  
-        System.out.println("Poistamisiin kului aikaa: " + (aikaLopussa - aikaAlussa) + "ms.");
+        System.out.println("Poistamisiin kului aikaa("+maara+"): " + (aikaLopussa - aikaAlussa) + "ms.");
     }
 }

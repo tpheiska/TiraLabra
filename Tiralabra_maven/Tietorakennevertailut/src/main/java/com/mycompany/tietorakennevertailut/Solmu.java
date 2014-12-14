@@ -92,6 +92,10 @@ public class Solmu {
         return this.korkeus;
     }
     
+    /**
+     * Palauttaa solmun värin
+     * @return solmun väri
+     */
     public char vari() {
         
         return this.vari;
@@ -155,6 +159,10 @@ public class Solmu {
         else ;
     }
     
+    /**
+     * Tulostaa solmun tieto kentän sisällön
+     * @return palauttaa tietokentän sisällön Stringiksi muutettuna
+     */
     @Override
     public String toString() {
         

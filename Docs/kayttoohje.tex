@@ -1,0 +1,23 @@
+\documentclass[12pt,a4paper,leqno,titlepage]{article}
+
+\input{Tyyli.sty}
+
+\begin{document}
+\title{Käyttöohje}
+\author{Tomi Heiskanen}
+\maketitle
+
+\section*{Puiden käyttö}
+
+Tietorakenteita voidaan käyttää luomalla oliot niistä. Solmun tietokentän arvo
+on kokonaisluku, mutta sen voisi muutta miksi tahansa vertailtavaksi olioksi.
+Tällöin pitää huolehtia että puun hakemisen, lisäämisen ja poistamisen yhteydessä
+vertaillaan sitten avainarvoja, eikä kokonaislukuja suoraan kuten nyt. Jokaisella
+puulla on testipääohjelmansa ja sen voi suorittaa ajamalla käännetyn java-koodin.
+
+Testipääohjelmassa lisättävien alkioiden määrää voidaan muuttaa muuttamalla
+\verb+maara+ -muuttujan arvoa. Se pitää kirjoittaa itse testipääohjelmaan ja muutoksen
+jälkeen puu pitää kääntää uudelleen. JUnit testit ovat \\
+TiraLabra\_maven/Tietorakennevertailut/src/test/java-kansiossa. Suorituskykytestit 
+suoritetaan ajamalla testipääohjelma
+\end{document}
